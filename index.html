@@ -4,21 +4,43 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Your Site</title>
-    <link rel="preload" as="image" href="images/doggard.jpg" />
+    <link rel="preload" as="image" href="./images/doggard.jpg" />
     <style>
-      html, body { margin: 0; height: 100%; }
+      html, body {
+        margin: 0;
+        height: 100%;
+      }
       .bg {
         position: fixed;
         inset: 0;
-        background: url("doggard.jpg") center / cover no-repeat;
+        background: url("./images/doggard.jpg") center / cover no-repeat;
         height: 100dvh;
         width: 100vw;
+      }
+      h1 {
+        position: relative;
+        z-index: 1;
+        color: white;
+        text-align: center;
+        margin-top: 20px;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      }
+      .debug-img {
+        position: relative;
+        z-index: 1;
+        display: block;
+        max-width: 300px;
+        margin: 20px auto;
+        border: 2px solid black;
       }
     </style>
   </head>
   <body>
-    <h1> GUYS DND TODAY </h1>
     <div class="bg" role="img" aria-label="doggard"></div>
-    <img src="images/doggard.jpg" alt ="doggard">
+
+    <h1>Test Heading</h1>
+
+    <!-- Debug: this should show the raw image -->
+    <img class="debug-img" src="./images/doggard.jpg" alt="doggard">
   </body>
 </html>
