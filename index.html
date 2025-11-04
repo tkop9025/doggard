@@ -3,42 +3,75 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Your Site</title>
-    <link rel="preload" as="image" href="./images/doggard.png" />
+    <title>doggard</title>
+    <link rel="preload" as="image" href="images/doggard.png" />
     <style>
       html, body {
         margin: 0;
         height: 100%;
       }
+
       .bg {
         position: fixed;
         inset: 0;
-        background: url("./images/doggard.png") center / cover no-repeat;
+        background: url("images/doggard.png") center / cover no-repeat;
         height: 100dvh;
         width: 100vw;
       }
-      h1 {
-        position: relative;
-        z-index: 1;
-        color: white;
-        text-align: center;
-        margin-top: 20px;
-        font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+
+      .marquee-wrapper {
+        position: fixed;
+        bottom: 10%;
+        left: 0;
+        width: 100%;
+        overflow: hidden;
+        pointer-events: none;
       }
-      .debug-img {
-        position: relative;
-        z-index: 1;
-        display: block;
-        max-width: 300px;
-        margin: 20px auto;
-        border: 2px solid black;
+
+      .marquee-inner {
+        display: inline-flex;
+        white-space: nowrap;
+        will-change: transform;
+        animation: scroll-across 15s linear infinite;
+      }
+
+      .marquee-text {
+        font-size: clamp(2rem, 4vw, 4rem);
+        font-weight: 900;
+        text-transform: uppercase;
+        text-shadow: 0 0 8px rgba(0, 0, 0, 0.9);
+        padding-right: 4rem;
+        animation: rainbow-flash 0.7s steps(7, jump-start) infinite;
+      }
+
+      @keyframes scroll-across {
+        0%   { transform: translateX(0); }
+        100% { transform: translateX(-50%); }
+      }
+
+      @keyframes rainbow-flash {
+        0%   { color: #ff0000; }
+        16%  { color: #ff7f00; }
+        33%  { color: #ffff00; }
+        50%  { color: #00ff00; }
+        66%  { color: #0000ff; }
+        83%  { color: #4b0082; }
+        100% { color: #8b00ff; }
       }
     </style>
   </head>
   <body>
-    <div class="bg" role="img" aria-label="doggard"></div>
+    <div class="bg" role="img" aria-label="doggard background"></div>
 
-    <h1>D&D TODAY!</h1>
-
+    <div class="marquee-wrapper">
+      <div class="marquee-inner">
+        <span class="marquee-text">
+          ✨ D&D TODAY ✨ D&D TODAY ✨ D&D TODAY ✨ D&D TODAY ✨
+        </span>
+        <span class="marquee-text" aria-hidden="true">
+          ✨ D&D TODAY ✨ D&D TODAY ✨ D&D TODAY ✨ D&D TODAY ✨
+        </span>
+      </div>
+    </div>
   </body>
 </html>
