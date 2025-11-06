@@ -1,0 +1,57 @@
+html, body {
+  margin: 0;
+  height: 100%;
+}
+
+.bg {
+  position: fixed;
+  inset: 0;
+  background: url("images/doggard.png") center / cover no-repeat;
+  height: 100dvh;
+  width: 100vw;
+}
+
+.marquee-wrapper {
+  position: fixed;
+  bottom: 10%;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.marquee-inner {
+  display: inline-flex;
+  white-space: nowrap;
+  will-change: transform;
+  animation: scroll-across 15s linear infinite;
+}
+
+.marquee-text {
+  font-size: clamp(2rem, 4vw, 4rem);
+  font-weight: 900;
+  text-transform: uppercase;
+  text-shadow: 0 0 8px rgba(0, 0, 0, 0.9);
+  padding-right: 4rem;
+  animation: rainbow-flash 0.7s steps(7, jump-start) infinite;
+}
+
+/* continuous leftward scroll of the whole strip */
+@keyframes scroll-across {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* rainbow flash effect */
+@keyframes rainbow-flash {
+  0%   { color: #ff0000; }
+  16%  { color: #ff7f00; }
+  33%  { color: #ffff00; }
+  50%  { color: #00ff00; }
+  66%  { color: #0000ff; }
+  83%  { color: #4b0082; }
+  100% { color: #8b00ff; }
+}
+
+/* optional: hide the normal cursor for ✨ trail only */
+/* body { cursor: none; } */

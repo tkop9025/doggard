@@ -5,61 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>doggard</title>
     <link rel="preload" as="image" href="images/doggard.png" />
-    <style>
-      html, body {
-        margin: 0;
-        height: 100%;
-      }
-
-      .bg {
-        position: fixed;
-        inset: 0;
-        background: url("images/doggard.png") center / cover no-repeat;
-        height: 100dvh;
-        width: 100vw;
-      }
-
-      .marquee-wrapper {
-        position: fixed;
-        bottom: 10%;
-        left: 0;
-        width: 100%;
-        overflow: hidden;
-        pointer-events: none;
-      }
-
-      .marquee-inner {
-        display: inline-flex;
-        white-space: nowrap;
-        will-change: transform;
-        animation: scroll-across 15s linear infinite;
-      }
-
-      .marquee-text {
-        font-size: clamp(2rem, 4vw, 4rem);
-        font-weight: 900;
-        text-transform: uppercase;
-        text-shadow: 0 0 8px rgba(0, 0, 0, 0.9);
-        padding-right: 4rem;
-        animation: rainbow-flash 0.7s steps(7, jump-start) infinite;
-      }
-
-      @keyframes scroll-across {
-        0%   { transform: translateX(0); }
-        100% { transform: translateX(-50%); }
-      }
-
-      @keyframes rainbow-flash {
-        0%   { color: #ff0000; }
-        16%  { color: #ff7f00; }
-        33%  { color: #ffff00; }
-        50%  { color: #00ff00; }
-        66%  { color: #0000ff; }
-        83%  { color: #4b0082; }
-        100% { color: #8b00ff; }
-      }
-    </style>
+    <link rel="stylesheet" href="style.css">
   </head>
+
   <body>
     <div class="bg" role="img" aria-label="doggard background"></div>
 
@@ -73,27 +21,7 @@
         </span>
       </div>
     </div>
-  </body>
-  <script>
-document.addEventListener("mousemove", e => {
-  const sparkle = document.createElement("span");
-  sparkle.textContent = "✨";               // or "🦄", "🔥", etc.
-  sparkle.style.position = "fixed";
-  sparkle.style.left = e.clientX + "px";
-  sparkle.style.top = e.clientY + "px";
-  sparkle.style.pointerEvents = "none";
-  sparkle.style.fontSize = "24px";
-  sparkle.style.animation = "fade 1s linear forwards";
-  document.body.appendChild(sparkle);
-  setTimeout(() => sparkle.remove(), 1000);
-});
 
-const style = document.createElement("style");
-style.textContent = `
-@keyframes fade {
-  0%   { opacity: 1; transform: translateY(0) scale(1); }
-  100% { opacity: 0; transform: translateY(-40px) scale(0); }
-}`;
-document.head.appendChild(style);
-</script>
+    <script src="script.js"></script>
+  </body>
 </html>
