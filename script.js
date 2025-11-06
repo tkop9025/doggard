@@ -1,3 +1,4 @@
+// ✨ Sparkle trail
 const MAX_SPARKLES = 75;
 
 document.addEventListener("mousemove", e => {
@@ -24,3 +25,30 @@ style.textContent = `
   100% { opacity: 0; transform: translateY(-40px) scale(0); }
 }`;
 document.head.appendChild(style);
+
+// 🧙‍♂️ D&D Day logic
+const marqueeWrapper = document.getElementById("marqueeWrapper");
+const marqueeInner = document.getElementById("marqueeInner");
+
+const today = new Date();
+const isTuesday = today.getDay() === 2; // Sunday=0, Monday=1, Tuesday=2
+
+if (isTuesday) {
+  marqueeInner.innerHTML = `
+    <span class="marquee-text">
+      ✨ D&D TODAY ✨ D&D TODAY ✨ D&D TODAY ✨ D&D TODAY ✨
+    </span>
+    <span class="marquee-text" aria-hidden="true">
+      ✨ D&D TODAY ✨ D&D TODAY ✨ D&D TODAY ✨ D&D TODAY ✨
+    </span>
+  `;
+} else {
+  marqueeInner.innerHTML = `
+    <span class="marquee-text">
+      ❌ NO D&D TODAY ❌ NO D&D TODAY ❌ NO D&D TODAY ❌ NO D&D TODAY ❌
+    </span>
+    <span class="marquee-text" aria-hidden="true">
+      ❌ NO D&D TODAY ❌ NO D&D TODAY ❌ NO D&D TODAY ❌ NO D&D TODAY ❌
+    </span>
+  `;
+}
