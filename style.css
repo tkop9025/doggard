@@ -1,6 +1,43 @@
 html, body {
   margin: 0;
   height: 100%;
+  background: black;
+  color: white;
+  overflow: hidden;
+  font-family: monospace;
+}
+
+/* CRT glow + scanlines effect */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background: 
+    repeating-linear-gradient(
+      0deg,
+      rgba(0, 0, 0, 0.15) 0px,
+      rgba(0, 0, 0, 0.15) 1px,
+      transparent 2px,
+      transparent 3px
+    );
+  opacity: 0.25;
+  z-index: 100;
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(circle at center, rgba(255,255,255,0.05) 0%, rgba(0,0,0,0.8) 100%);
+  mix-blend-mode: overlay;
+  opacity: 0.4;
+  z-index: 101;
+}
+
+html {
+  filter: contrast(1.1) brightness(1.2) saturate(1.1);
 }
 
 .bg {
@@ -9,6 +46,7 @@ html, body {
   background: url("images/doggard.png") center / cover no-repeat;
   height: 100dvh;
   width: 100vw;
+  filter: brightness(1.1) contrast(1.1) saturate(1.2);
 }
 
 .marquee-wrapper {
@@ -18,6 +56,7 @@ html, body {
   width: 100%;
   overflow: hidden;
   pointer-events: none;
+  z-index: 10;
 }
 
 .marquee-inner {
@@ -31,9 +70,13 @@ html, body {
   font-size: clamp(2rem, 4vw, 4rem);
   font-weight: 900;
   text-transform: uppercase;
-  text-shadow: 0 0 8px rgba(0, 0, 0, 0.9);
+  text-shadow:
+    0 0 5px rgba(255, 0, 0, 0.75),
+    0 0 10px rgba(0, 255, 0, 0.75),
+    0 0 15px rgba(0, 0, 255, 0.75);
   padding-right: 4rem;
   animation: rainbow-flash 0.7s steps(7, jump-start) infinite;
+  z-index: 20;
 }
 
 /* continuous leftward scroll of the whole strip */
@@ -54,4 +97,4 @@ html, body {
 }
 
 /* optional: hide the normal cursor for ✨ trail only */
-/* body { cursor: none; } */
+body { cursor: none; }
