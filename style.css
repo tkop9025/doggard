@@ -23,6 +23,7 @@ body::before {
     );
   opacity: 0.25;
   z-index: 100;
+  animation: flicker 4s infinite;
 }
 
 body::after {
@@ -36,6 +37,7 @@ body::after {
   mix-blend-mode: overlay;
   opacity: 0.5;
   z-index: 101;
+  animation: flicker 4s infinite alternate;
 }
 
 /* Warp the whole screen into a CRT curve */
@@ -46,15 +48,7 @@ html {
   box-shadow:
     inset 0 0 80px rgba(0, 0, 0, 0.8),
     inset 0 0 200px rgba(0, 0, 0, 0.9);
-}
-
-/* optional curvature vignette at edges */
-body {
-  position: relative;
-}
-body::after {
-  background:
-    radial-gradient(circle at center, rgba(255,255,255,0.05) 0%, rgba(0,0,0,0.9) 85%);
+  animation: subtle-flicker 6s infinite ease-in-out;
 }
 
 /* --- Background image --- */
@@ -112,6 +106,24 @@ body::after {
   66%  { color: #0000ff; }
   83%  { color: #4b0082; }
   100% { color: #8b00ff; }
+}
+
+/* flicker brightness subtly */
+@keyframes flicker {
+  0%, 100% { opacity: 0.25; }
+  10% { opacity: 0.3; }
+  20% { opacity: 0.2; }
+  30% { opacity: 0.28; }
+  50% { opacity: 0.23; }
+  70% { opacity: 0.27; }
+  90% { opacity: 0.24; }
+}
+
+@keyframes subtle-flicker {
+  0%, 100% { filter: brightness(1.15) contrast(1.1); }
+  25% { filter: brightness(1.1) contrast(1.05); }
+  50% { filter: brightness(1.18) contrast(1.1); }
+  75% { filter: brightness(1.12) contrast(1.05); }
 }
 
 /* Hide the default cursor for ✨ trail only */
