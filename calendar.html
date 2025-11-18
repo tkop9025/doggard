@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>doggard – puzzle calendar</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="puzzles-test.css" />
+  </head>
+  <body>
+    <div class="page">
+      <div class="calendar-frame">
+        <div class="calendar-nav">
+          <a href="index.html">&larr; Back to doggard</a>
+        </div>
+
+<div class="calendar-header">
+  <button class="calendar-month-btn" id="prevMonth" type="button">
+    &larr;
+  </button>
+
+  <div class="calendar-header-center">
+    <div class="calendar-title" id="calendarTitle">Puzzle Calendar</div>
+    <div class="calendar-subtitle" id="calendarSubtitle">Loading…</div>
+  </div>
+
+  <button class="calendar-month-btn" id="nextMonth" type="button">
+    &rarr;
+  </button>
+</div>
+        <div class="calendar-grid" id="calendarGrid"></div>
+
+        <div class="calendar-status" id="calendarStatus">
+          Hover a day to see puzzle status.
+        </div>
+      </div>
+    </div>
+
+    <script src="calendar.js"></script>
+  </body>
+</html>

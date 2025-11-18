@@ -126,5 +126,3 @@ html {
   75% { filter: brightness(1.12) contrast(1.05); }
 }
 
-/* Hide the default cursor for ✨ trail only */
-body { cursor: none; }
