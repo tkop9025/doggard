@@ -6,7 +6,7 @@ async function loadBoardUrl() {
   const text = await res.text();
   console.log("Board CSV raw:", JSON.stringify(text));
 
-  // Take the first non-empty line and first cell → treat it as URL
+  // Split and remove empty lines
   const lines = text
     .split("\n")
     .map((l) => l.trim())
@@ -16,7 +16,7 @@ async function loadBoardUrl() {
     throw new Error("No URL found in board sheet");
   }
 
-  // If for some reason there are commas, just take the first cell
+  // First cell of first row = the board image URL
   const firstLine = lines[0];
   const firstCell = firstLine.split(",")[0].trim();
 
@@ -29,20 +29,12 @@ async function loadBoardUrl() {
 
 document.addEventListener("DOMContentLoaded", async () => {
   const imgEl = document.getElementById("boardImage");
-  const updatedEl = document.getElementById("boardUpdated");
-  const noteEl = document.getElementById("boardNote");
+  if (!imgEl) return; // safety: image element must exist
 
   try {
     const url = await loadBoardUrl();
-
     imgEl.src = url;
-    updatedEl.textContent = "Board loaded from Sheet.";
-    noteEl.textContent =
-      "Screenshot of the current game state. Zoom in with your browser if you need more detail.";
   } catch (err) {
     console.error(err);
-    updatedEl.textContent = "Failed to load board image URL.";
-    noteEl.textContent =
-      "Make sure the board sheet has the image URL in the first cell.";
   }
 });

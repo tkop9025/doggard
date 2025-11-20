@@ -1,0 +1,84 @@
+/* Page background / layout */
+
+body {
+  margin: 0;
+  font-family: system-ui, sans-serif;
+  background: radial-gradient(circle at top, #e0f2fe, #020617);
+  color: #e5e7eb;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.board-page {
+  max-width: 1200px;
+  width: 100%;
+  padding: 2rem 1.5rem;
+}
+
+/* Header */
+
+.board-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.board-back a {
+  color: #a5b4fc;
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+.board-back a:hover {
+  text-decoration: underline;
+}
+
+.board-title {
+  font-size: 1.4rem;
+  font-weight: 600;
+}
+
+/* Status text */
+
+.board-updated {
+  font-size: 0.8rem;
+  color: #9ca3af;
+  margin-bottom: 0.75rem;
+}
+
+/* Card / image container */
+
+.board-card {
+  background: rgba(15, 23, 42, 0.9);
+  border-radius: 16px;
+  padding: 1rem;
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(148, 163, 184, 0.4);
+}
+
+.board-image-wrapper {
+  border-radius: 12px;
+  overflow: hidden;
+  background: #020617;
+}
+
+/* Bigger image: nearly full width, limited by viewport */
+
+.board-image {
+  display: block;
+  width: min(95vw, 1600px);
+  max-height: 85vh;
+  object-fit: contain;
+}
+
+/* Caption */
+
+.board-note {
+  margin-top: 0.75rem;
+  font-size: 0.8rem;
+  color: #9ca3af;
+  text-align: center;
+}
