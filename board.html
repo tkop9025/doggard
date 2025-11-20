@@ -5,13 +5,15 @@
     <title>doggard - current gameboard</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="board.css" />
+    <link rel="stylesheet" href="nav.css" />
   </head>
   <body>
     <div class="board-page">
       <div class="board-header">
         <div class="board-back">
-          <a href="index.html">&larr; Back to doggard</a>
+          <!-- you can remove this if you want to rely only on the floating nav -->
         </div>
+        <div class="board-title">Current Gameboard</div>
       </div>
 
       <div class="board-card">
@@ -24,6 +26,18 @@
           />
         </div>
       </div>
+    </div>
+
+    <div class="nav-floating">
+      <a href="index.html" class="nav-btn">
+        <span class="nav-label">Home</span>
+      </a>
+      <a href="calendar.html" class="nav-btn">
+        <span class="nav-label">Puzzles</span>
+      </a>
+      <a href="board.html" class="nav-btn nav-current">
+        <span class="nav-label">Board</span>
+      </a>
     </div>
 
     <script src="board.js"></script>

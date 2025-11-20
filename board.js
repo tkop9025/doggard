@@ -6,7 +6,6 @@ async function loadBoardUrl() {
   const text = await res.text();
   console.log("Board CSV raw:", JSON.stringify(text));
 
-  // Split and remove empty lines
   const lines = text
     .split("\n")
     .map((l) => l.trim())
@@ -16,7 +15,6 @@ async function loadBoardUrl() {
     throw new Error("No URL found in board sheet");
   }
 
-  // First cell of first row = the board image URL
   const firstLine = lines[0];
   const firstCell = firstLine.split(",")[0].trim();
 
@@ -29,7 +27,7 @@ async function loadBoardUrl() {
 
 document.addEventListener("DOMContentLoaded", async () => {
   const imgEl = document.getElementById("boardImage");
-  if (!imgEl) return; // safety: image element must exist
+  if (!imgEl) return;
 
   try {
     const url = await loadBoardUrl();
