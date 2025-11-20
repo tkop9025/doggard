@@ -68,3 +68,8 @@
   opacity: 1;
   transform: translateX(0);
 }
+
+.home-body .nav-floating {
+  bottom: 3.0rem;
+  right: 5.0rem;
+}
