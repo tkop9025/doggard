@@ -60,30 +60,27 @@ body {
   align-items: center;
 }
 
-/* Wrapper that constrains image size */
 .board-image-wrapper {
+  /* visual styling */
   border-radius: 12px;
   overflow: hidden;
   background: #020617;
 
-  /* Set maximum visible area */
-  max-width: min(95vw, 1600px);
-  max-height: min(85vh, 1200px);
+  /* size constraints */
+  max-width: 95vw;
+  max-height: 90vh;
 
+  /* center the image inside */
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-/* Image scales down to fit wrapper */
 .board-image {
-  display: block;
-
-  /* DO NOT force width to 95vw → this caused the old overflow problem */
+  /* scale to fit the wrapper */
   max-width: 100%;
   max-height: 100%;
-
-  object-fit: contain;
   width: auto;
   height: auto;
+  object-fit: contain;
 }
