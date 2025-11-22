@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>doggard – WebGL Fractal Lab</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="playground.css">
+</head>
+<body>
+  <canvas id="glCanvas"></canvas>
+
+<div class="controls">
+  <div class="controls-title">WebGL Fractal Lab</div>
+
+  <div class="controls-row">
+    <label for="modeSelect">Mode:</label>
+    <select id="modeSelect">
+      <option value="mandelbrot">Mandelbrot</option>
+      <option value="julia">Julia</option>
+      <option value="burning">Burning Ship</option>
+    </select>
+  </div>
+
+  <div class="controls-row">
+    <label for="zoomSpeed">Speed:</label>
+    <input
+      type="range"
+      id="zoomSpeed"
+      min="0.5"
+      max="2.0"
+      step="0.01"
+      value="1.0"
+    />
+  </div>
+
+  <div class="controls-row">
+    <a href="index.html" class="back-link">← Back to doggard</a>
+  </div>
+</div>
+  <script src="webgl-fractal.js"></script>
+</body>
+</html>

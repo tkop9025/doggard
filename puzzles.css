@@ -1,156 +1,30 @@
-/* Page layout */
-html, body {
+/* -------------- Page background -------------- */
+
+body {
+  background: linear-gradient(135deg, #fafafa, #f0f4ff);
+  font-family: system-ui, sans-serif;
   margin: 0;
-  padding: 0;
-  min-height: 100%;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  background: #f5f5f7;
-  color: #222;
+  color: #2c2c2c;
 }
 
 .page {
-  min-height: 100vh;
   display: flex;
-  align-items: flex-start;
   justify-content: center;
-  padding: 3rem 1rem;
+  padding: 2rem 1rem;
 }
 
-/* Calendar shell */
+/* -------------- Frame & Header -------------- */
+
 .calendar-frame {
-  width: min(100%, 900px);
-  background: #ffffff;
+  background: #ffffffee;
+  backdrop-filter: blur(6px);
+  padding: 2rem;
   border-radius: 16px;
-  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
-  padding: 1.75rem 2rem 2rem;
-  box-sizing: border-box;
-}
-
-.calendar-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  margin-bottom: 1.25rem;
-}
-
-.calendar-title {
-  font-size: 1.4rem;
-  font-weight: 600;
-}
-
-.calendar-subtitle {
-  font-size: 0.9rem;
-  color: #6b7280;
-}
-
-/* Calendar grid */
-.calendar-grid {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 0.5rem;
-}
-
-.calendar-weekday {
-  font-size: 0.75rem;
-  text-align: center;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: #9ca3af;
-}
-
-/* Day cells */
-.calendar-day {
-  min-height: 3.4rem;
-  border-radius: 10px;
+  box-shadow: 0 8px 32px rgb(0 0 0 / 10%);
+  max-width: 750px;
+  width: 100%;
   border: 1px solid #e5e7eb;
-  font-size: 0.85rem;
-  padding: 0.35rem 0.45rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  box-sizing: border-box;
-  background: #f9fafb;
 }
-
-.calendar-day-number {
-  font-weight: 600;
-  color: #111827;
-}
-
-.calendar-day-label {
-  font-size: 0.7rem;
-  color: #6b7280;
-}
-
-/* Types of days */
-.calendar-day--empty {
-  border: none;
-  background: transparent;
-}
-
-.calendar-day--has-puzzle {
-  background: #eff6ff;
-  border-color: #3b82f6;
-  cursor: pointer;
-}
-
-.calendar-day--has-puzzle .calendar-day-label {
-  color: #1d4ed8;
-  font-weight: 500;
-}
-
-.calendar-day--has-puzzle:hover {
-  background: #dbeafe;
-}
-
-.calendar-day--no-puzzle {
-  background: #f9fafb;
-  color: #9ca3af;
-}
-
-.calendar-day--today {
-  border-color: #059669;
-  box-shadow: 0 0 0 1px rgba(5, 150, 105, 0.25);
-}
-
-/* Status bar */
-.calendar-status {
-  margin-top: 1rem;
-  font-size: 0.8rem;
-  color: #6b7280;
-  text-align: left;
-  border-top: 1px solid #e5e7eb;
-  padding-top: 0.75rem;
-}
-
-/* Simple link back to main site */
-.calendar-nav {
-  margin-bottom: 1rem;
-  font-size: 0.85rem;
-}
-
-.calendar-nav a {
-  color: #2563eb;
-  text-decoration: none;
-}
-
-.calendar-nav a:hover {
-  text-decoration: underline;
-}
-
-/* Responsive tweak */
-@media (max-width: 640px) {
-  .calendar-frame {
-    padding: 1.25rem 1.25rem 1.5rem;
-    border-radius: 0;
-    box-shadow: none;
-  }
-
-  .calendar-day {
-    min-height: 3rem;
-  }
-}
-/* Month navigation buttons */
 
 .calendar-header {
   display: flex;
@@ -165,24 +39,169 @@ html, body {
   text-align: center;
 }
 
+.calendar-title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: #1f2937;
+}
+
+.calendar-subtitle {
+  margin-top: 0.5rem;
+  font-size: 0.95rem;
+  color: #6b7280;
+}
+
+/* -------------- Month Nav Buttons -------------- */
+
 .calendar-month-btn {
-  border: 1px solid #e5e7eb;
-  background: #f9fafb;
-  border-radius: 999px;
-  width: 2.2rem;
-  height: 2.2rem;
-  display: inline-flex;
+  border: none;
+  background: #eef2ff;
+  color: #4338ca;
+  border-radius: 50%;
+  width: 2.4rem;
+  height: 2.4rem;
+  display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  font-size: 1rem;
-  color: #374151;
+  font-size: 1.1rem;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  transition: background 0.15s, transform 0.1s;
 }
 
 .calendar-month-btn:hover {
-  background: #e5e7eb;
+  background: #e0e7ff;
 }
 
 .calendar-month-btn:active {
-  background: #d1d5db;
+  transform: scale(0.92);
+}
+
+/* -------------- Grid Layout -------------- */
+
+.calendar-grid {
+  margin-top: 1.5rem;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0.6rem;
+}
+
+.calendar-weekday {
+  text-align: center;
+  font-weight: 600;
+  color: #4b5563;
+  padding-bottom: 0.25rem;
+}
+
+/* weekend labels */
+.calendar-weekday--weekend {
+  color: #6d28d9;
+}
+
+/* -------------- Day Tiles -------------- */
+
+/* pop-in animation */
+@keyframes day-pop {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.calendar-day {
+  background: #f9fafb;
+  border-radius: 10px;
+  padding: 0.6rem;
+  min-height: 75px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  cursor: default;
+  border: 1px solid #e5e7eb;
+  transition: transform 0.1s, box-shadow 0.2s;
+  opacity: 0;
+  animation: day-pop 0.25s ease-out forwards;
+}
+
+.calendar-day:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 3px 8px rgba(0,0,0,0.08);
+}
+
+.calendar-day--empty {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+}
+
+.calendar-day-number {
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: #1f2937;
+}
+
+.calendar-day-label {
+  font-size: 0.8rem;
+  color: #4b5563;
+}
+
+/* -------------- Puzzle states -------------- */
+
+.calendar-day--has-puzzle {
+  background: #ecfdf3;              /* slightly brighter mint */
+  border: 1px solid #22c55e;
+  cursor: pointer;
+  position: relative;
+}
+
+.calendar-day--has-puzzle .calendar-day-label {
+  color: #15803d;
+  font-weight: 600;
+}
+
+/* Little "Puzzle" pill in the corner */
+.calendar-day-pill {
+  position: absolute;
+  top: 0.35rem;
+  right: 0.4rem;
+  font-size: 0.65rem;
+  padding: 0.15rem 0.35rem;
+  border-radius: 999px;
+  background: #bbf7d0;
+  color: #166534;
+  font-weight: 600;
+}
+
+.calendar-day--no-puzzle {
+  background: #f3f4f6;
+}
+
+/* weekend tint for no-puzzle days */
+.calendar-day--weekend.calendar-day--no-puzzle {
+  background: #eef2ff;
+}
+
+/* -------------- Today Highlight -------------- */
+
+.calendar-day--today {
+  outline: 2px solid #818cf8;
+  outline-offset: -2px;
+}
+
+/* -------------- Status Bar -------------- */
+
+.calendar-status {
+  margin-top: 1.5rem;
+  font-size: 0.95rem;
+  color: #374151;
+  text-align: center;
+  padding: 0.75rem;
+  background: #eef2ff;
+  border-radius: 8px;
+  border: 1px solid #c7d2fe;
 }
