@@ -48,9 +48,11 @@ async function loadPuzzlesFromSheet() {
       url: row.url,
       title: row.title,
       source: row.source,
+      star: row.star,
     };
   }
 
+  console.log(puzzles);
   return puzzles;
 }
 
@@ -134,11 +136,13 @@ function buildCalendar(year, month) {
       cell.classList.add('calendar-day--has-puzzle');
       label.textContent = puzzle.title || 'Puzzle available';
 
-      // Add small "Puzzle" pill in the corner
-      const pill = document.createElement('div');
-      pill.className = 'calendar-day-pill';
-      pill.textContent = 'Puzzle';
-      cell.appendChild(pill);
+      if (puzzle.star != ""){
+        // Add small "Puzzle" pill in the corner
+        const pill = document.createElement('div');
+        pill.className = 'calendar-day-pill';
+        pill.textContent = '⭐';
+        cell.appendChild(pill);
+      }
 
       cell.addEventListener('click', () => {
         window.open(puzzle.url, '_blank', 'noopener');

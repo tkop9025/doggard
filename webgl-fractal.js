@@ -148,27 +148,25 @@ function compileShader(gl, src, type) {
   const u_juliaC = gl.getUniformLocation(program, "u_juliaC");
 
   // -------- Per-mode waypoints (cool places) --------
-
-  // For each mode, waypoints have:
-  // { cx, cy, zoom, dwellMs }
+  // For each mode, waypoints have: { cx, cy, zoom, dwell }
   const WAYPOINTS = {
     mandelbrot: [
-      { cx: -0.5,        cy:  0.0,        zoom: 1.2,  dwell: 6000 },
+      { cx: -0.5,        cy:  0.0,        zoom:  8.0, dwell: 6000 },
       { cx: -0.7435,     cy:  0.1314,     zoom: 40.0, dwell: 8000 },
       { cx: -0.761574,   cy: -0.0847596,  zoom: 60.0, dwell: 8000 },
       { cx: -1.25066,    cy:  0.02012,    zoom: 50.0, dwell: 8000 },
       { cx:  0.0016437,  cy: -0.8224676,  zoom: 80.0, dwell: 9000 }
     ],
     julia: [
-      // For Julia, center doesn't matter as much, but we can still pan around
-      { cx: 0.0,   cy: 0.0,   zoom: 1.0,  dwell: 6000 },
-      { cx: -0.3,  cy: 0.3,   zoom: 20.0, dwell: 8000 },
-      { cx: 0.3,   cy: -0.3,  zoom: 25.0, dwell: 8000 }
+      // For Julia, center is more aesthetic than structural, but we can still pan
+      { cx:  0.0,  cy:  0.0,  zoom:  6.0, dwell: 6000 },
+      { cx: -0.3,  cy:  0.3,  zoom: 20.0, dwell: 8000 },
+      { cx:  0.3,  cy: -0.3,  zoom: 25.0, dwell: 8000 }
     ],
     burning: [
-      { cx: -1.7, cy: -0.02, zoom: 1.1,  dwell: 6000 },
-      { cx: -1.8, cy:  0.01, zoom: 35.0, dwell: 9000 },
-      { cx: -1.75,cy: -0.02, zoom: 60.0, dwell: 9000 }
+      { cx: -1.7,  cy: -0.02, zoom:  8.0, dwell: 6000 },
+      { cx: -1.8,  cy:  0.01, zoom: 35.0, dwell: 9000 },
+      { cx: -1.75, cy: -0.02, zoom: 60.0, dwell: 9000 }
     ]
   };
 
@@ -188,11 +186,10 @@ function compileShader(gl, src, type) {
 
   let centerX = WAYPOINTS[currentMode][0].cx;
   let centerY = WAYPOINTS[currentMode][0].cy;
-  let zoom = WAYPOINTS[currentMode][0].zoom;
+  let zoom = 1.0; // always start zoomed out for each waypoint
 
   let targetCenterX = centerX;
   let targetCenterY = centerY;
-  let targetZoom = zoom;
 
   let waypointStartTime = performance.now();
   const startTime = performance.now();
@@ -205,7 +202,7 @@ function compileShader(gl, src, type) {
     const wp = WAYPOINTS[currentMode][0];
     targetCenterX = centerX = wp.cx;
     targetCenterY = centerY = wp.cy;
-    targetZoom = zoom = wp.zoom;
+    zoom = 1.0; // reset zoom when changing mode
 
     waypointStartTime = performance.now();
   }
@@ -223,8 +220,8 @@ function compileShader(gl, src, type) {
 
     targetCenterX = wp.cx;
     targetCenterY = wp.cy;
-    targetZoom = wp.zoom;
     waypointStartTime = performance.now();
+    zoom = 1.0; // start zooming in from the outside again
 
     if (currentMode === "julia") {
       // slowly change Julia parameter at each waypoint
@@ -252,15 +249,19 @@ function compileShader(gl, src, type) {
     // Speed factor from slider (0.5x .. 2x)
     const speedMul = zoomSlider ? parseFloat(zoomSlider.value) || 1.0 : 1.0;
 
-    // Smoothly interpolate center & zoom toward target
+    // Smoothly interpolate center toward target
     const baseLerp = 0.05;
     const lerp = baseLerp * speedMul;
 
     centerX += (targetCenterX - centerX) * lerp;
     centerY += (targetCenterY - centerY) * lerp;
-    zoom    += (targetZoom    - zoom)    * lerp;
 
-    // When we've spent enough time at this waypoint, or we're close enough to target, move on
+    // Continuous zoom IN toward each waypoint
+    const baseZoomFactor = 1.01;          // how fast to zoom in
+    const zoomFactor = Math.pow(baseZoomFactor, speedMul);
+    zoom *= zoomFactor;
+
+    // Waypoint logic: zoom in until we hit wp.zoom, then move on
     const wps = WAYPOINTS[currentMode];
     const wp = wps[waypointIndex];
     const dwellMs = wp.dwell / speedMul;
@@ -269,10 +270,12 @@ function compileShader(gl, src, type) {
     const centerClose =
       Math.abs(centerX - targetCenterX) < 0.002 &&
       Math.abs(centerY - targetCenterY) < 0.002;
-    const zoomClose = Math.abs(zoom - targetZoom) < 0.01;
 
-    if ((centerClose && zoomClose && timeHere > dwellMs * 0.5) ||
-        timeHere > dwellMs) {
+    const reachedDepth = zoom >= wp.zoom;
+
+    // If we've zoomed deep enough and we're roughly over the point,
+    // or we've just been here too long, advance to the next waypoint.
+    if ((reachedDepth && centerClose) || timeHere > dwellMs) {
       advanceWaypoint();
     }
 
