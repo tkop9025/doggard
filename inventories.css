@@ -1,0 +1,109 @@
+/* Background: reuse Bliss for consistency with calendar */
+body {
+  margin: 0;
+  font-family: Tahoma, "Segoe UI", sans-serif;
+  background: url("images/bliss2.webp") center center / cover fixed no-repeat;
+  color: #111827;
+}
+
+/* Centered XP-style window */
+.inventory-page {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  padding: 3rem 1rem;
+  box-sizing: border-box;
+}
+
+.inventory-frame {
+  width: 100%;
+  max-width: 900px;
+  border-radius: 6px;
+  overflow: hidden;
+  background: rgba(212, 208, 200, 0.85); /* XP grey, slightly translucent */
+  border: 1px solid #003399;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(4px);
+}
+
+/* Header bar */
+.inventory-header {
+  background: linear-gradient(to bottom, #0a66d1, #004ea4);
+  color: white;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #003399;
+}
+
+.inventory-title {
+  font-size: 1rem;
+  font-weight: bold;
+  text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.4);
+}
+
+.inventory-subtitle {
+  font-size: 0.8rem;
+  opacity: 0.95;
+  margin-top: 0.15rem;
+}
+
+/* Grid of character cards */
+.inventory-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 0.75rem;
+  padding: 0.75rem;
+}
+
+/* XP-style card for each character */
+.inventory-card {
+  background: #f0f0f0;
+  border-radius: 3px;
+  border: 1px solid #c3c3c3;
+  box-shadow: inset 1px 1px 0 #ffffff;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* Card header (character name) */
+.inventory-card-header {
+  background: linear-gradient(to bottom, #f7fbff, #d6e3f8);
+  border-bottom: 1px solid #9fb5d9;
+  padding: 0.4rem 0.6rem;
+  font-weight: bold;
+  font-size: 0.85rem;
+  color: #163b63;
+}
+
+/* Items list */
+.inventory-card-body {
+  padding: 0.4rem 0.6rem 0.55rem;
+  font-size: 0.8rem;
+}
+
+.inventory-items {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.inventory-item {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.15rem;
+}
+
+.inventory-item-name {
+  color: #111827;
+}
+
+.inventory-item-qty {
+  font-weight: bold;
+  color: #004e8a;
+}
+
+/* Empty-state text */
+.inventory-empty {
+  font-style: italic;
+  color: #6b7280;
+}

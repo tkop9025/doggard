@@ -154,10 +154,15 @@ function buildCalendar(year, month) {
   const today = new Date();
   const todayKey = formatDateKey(today);
 
-  // Empty cells before first day
+  // Empty cells before first day (non-interactive)
   for (let i = 0; i < startWeekday; i++) {
     const empty = document.createElement("div");
     empty.className = "calendar-day calendar-day--empty";
+
+    // make sure they don't respond to hover/click
+    empty.style.pointerEvents = "none";
+    empty.setAttribute("aria-hidden", "true");
+
     grid.appendChild(empty);
   }
 
