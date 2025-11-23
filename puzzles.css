@@ -66,8 +66,10 @@ body {
   justify-content: center;
   cursor: pointer;
   font-size: 1.1rem;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-  transition: background 0.15s, transform 0.1s;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  transition:
+    background 0.15s,
+    transform 0.1s;
 }
 
 .calendar-month-btn:hover {
@@ -123,14 +125,16 @@ body {
   justify-content: space-between;
   cursor: default;
   border: 1px solid #e5e7eb;
-  transition: transform 0.1s, box-shadow 0.2s;
+  transition:
+    transform 0.1s,
+    box-shadow 0.2s;
   opacity: 0;
   animation: day-pop 0.25s ease-out forwards;
 }
 
 .calendar-day:hover {
   transform: translateY(-2px);
-  box-shadow: 0 3px 8px rgba(0,0,0,0.08);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
 }
 
 .calendar-day--empty {
@@ -153,7 +157,7 @@ body {
 /* -------------- Puzzle states -------------- */
 
 .calendar-day--has-puzzle {
-  background: #ecfdf3;              /* slightly brighter mint */
+  background: #ecfdf3; /* slightly brighter mint */
   border: 1px solid #22c55e;
   cursor: pointer;
   position: relative;
@@ -186,6 +190,9 @@ body {
   background: #eef2ff;
 }
 
+.calendar-status {
+  white-space: pre-wrap; /* allows \n to render as real newlines */
+}
 /* -------------- Today Highlight -------------- */
 
 .calendar-day--today {
