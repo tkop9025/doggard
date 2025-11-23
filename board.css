@@ -1,86 +1,129 @@
-/* Page background / layout */
+/* ------------------------------
+   Page background / layout
+   ------------------------------ */
+
 body {
   margin: 0;
-  font-family: system-ui, sans-serif;
-  background: radial-gradient(circle at top, #e0f2fe, #020617);
-  color: #e5e7eb;
+  font-family: Tahoma, "Segoe UI", system-ui, sans-serif;
+  background: url("images/bliss.jpg") center center / cover fixed no-repeat;
+  color: #111827;
   min-height: 100vh;
+
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 3rem 1rem;
+  box-sizing: border-box;
 }
+
+/* XP-ish window frame for the board */
 
 .board-page {
-  max-width: 1200px;
+  max-width: 1100px;
   width: 100%;
-  padding: 2rem 1.5rem;
+  background: #d4d0c8; /* soft XP dialog grey */
+  border-radius: 6px;
+  border: 1px solid #003399;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  padding: 0.75rem 1rem 1rem;
 }
 
-/* Header */
+/* ------------------------------
+   Header
+   ------------------------------ */
+
 .board-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 1rem;
+
+  /* XP-ish colored strip */
+  background: linear-gradient(to bottom, #0a66d1, #004ea4);
+  color: #ffffff;
+  border-radius: 4px;
+  padding: 0.4rem 0.6rem;
+  margin-bottom: 0.75rem;
 }
 
+.board-title {
+  font-size: 1rem;
+  font-weight: 700;
+  text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.4);
+}
+
+/* If you ever re-add a back link, this will style it nicely */
 .board-back a {
-  color: #a5b4fc;
+  color: #e2ecff;
+  font-size: 0.8rem;
   text-decoration: none;
-  font-size: 0.9rem;
 }
-
 .board-back a:hover {
   text-decoration: underline;
 }
 
-.board-title {
-  font-size: 1.4rem;
-  font-weight: 600;
-}
-
-/* Status text */
+/* Optional status text (if you add it back later) */
 .board-updated {
   font-size: 0.8rem;
-  color: #9ca3af;
-  margin-bottom: 0.75rem;
+  color: #374151;
+  margin-top: 0.5rem;
 }
 
-/* Card / image container */
-.board-card {
-  background: rgba(15, 23, 42, 0.9);
-  border-radius: 16px;
-  padding: 1rem;
-  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.6);
-  border: 1px solid rgba(148, 163, 184, 0.4);
+/* ------------------------------
+   Card / image container
+   ------------------------------ */
 
-  /* center contents */
+.board-card {
+  margin-top: 0.75rem;
+  background: #111827; /* dark viewer vibe */
+  border-radius: 10px;
+  padding: 0.75rem;
+  border: 1px solid #4b5563;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.55);
+
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
+/* Wrapper defines the max size and centers image inside */
+
 .board-image-wrapper {
-  /* visual styling */
-  border-radius: 12px;
+  border-radius: 8px;
   overflow: hidden;
   background: #020617;
 
-  /* size constraints */
   max-width: 95vw;
   max-height: 90vh;
 
-  /* center the image inside */
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
+/* Image: fill as much as possible, keep aspect ratio */
+
 .board-image {
-  /* scale to fit the wrapper */
   max-width: 100%;
   max-height: 100%;
   width: auto;
   height: auto;
   object-fit: contain;
+}
+
+/* ------------------------------
+   Small-screen tweak
+   ------------------------------ */
+
+@media (max-width: 640px) {
+  body {
+    padding: 1.5rem 0.5rem;
+  }
+
+  .board-page {
+    padding: 0.6rem 0.7rem 0.8rem;
+  }
+
+  .board-card {
+    padding: 0.5rem;
+  }
 }
