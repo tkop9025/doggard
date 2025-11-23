@@ -34,10 +34,9 @@ body {
 
 .board-header {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start; /* <-- left-align contents */
   align-items: center;
 
-  /* XP-ish colored strip */
   background: linear-gradient(to bottom, #0a66d1, #004ea4);
   color: #ffffff;
   border-radius: 4px;
