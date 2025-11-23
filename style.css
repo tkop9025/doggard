@@ -1,4 +1,6 @@
-html, body {
+/* Apply CRT effect ONLY when the html has class="crt" */
+html.crt,
+html.crt body {
   margin: 0;
   height: 100%;
   background: black;
@@ -7,41 +9,49 @@ html, body {
   font-family: monospace;
 }
 
-/* --- CRT curvature and scanline overlay --- */
-body::before {
+/* --- CRT scanlines overlay --- */
+html.crt body::before {
   content: "";
   position: fixed;
   inset: 0;
   pointer-events: none;
-  background:
-    repeating-linear-gradient(
-      0deg,
-      rgba(0, 0, 0, 0.15) 0px,
-      rgba(0, 0, 0, 0.15) 1px,
-      transparent 2px,
-      transparent 3px
-    );
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.15) 0px,
+    rgba(0, 0, 0, 0.15) 1px,
+    transparent 2px,
+    transparent 3px
+  );
   opacity: 0.25;
   z-index: 100;
   animation: flicker 4s infinite;
 }
 
-body::after {
+/* --- CRT vignette + glow ---- */
+html.crt body::after {
   content: "";
   position: fixed;
   inset: 0;
   pointer-events: none;
   background:
-    radial-gradient(circle at center, rgba(255,255,255,0.05) 0%, rgba(0,0,0,0.9) 90%),
-    radial-gradient(ellipse at center, rgba(0,0,0,0.7) 0%, rgba(0,0,0,1) 100%);
+    radial-gradient(
+      circle at center,
+      rgba(255, 255, 255, 0.05) 0%,
+      rgba(0, 0, 0, 0.9) 90%
+    ),
+    radial-gradient(
+      ellipse at center,
+      rgba(0, 0, 0, 0.7) 0%,
+      rgba(0, 0, 0, 1) 100%
+    );
   mix-blend-mode: overlay;
   opacity: 0.5;
   z-index: 101;
   animation: flicker 4s infinite alternate;
 }
 
-/* Warp the whole screen into a CRT curve */
-html {
+/* --- CRT curvature + color distort --- */
+html.crt {
   filter: contrast(1.1) brightness(1.15) saturate(1.05);
   transform: perspective(800px) rotateX(2deg) scale(1.03);
   transform-origin: center;
@@ -51,8 +61,8 @@ html {
   animation: subtle-flicker 6s infinite ease-in-out;
 }
 
-/* --- Background image --- */
-.bg {
+/* --- Homepage background image --- */
+html.crt .bg {
   position: fixed;
   inset: 0;
   background: url("images/doggard.png") center / cover no-repeat;
@@ -62,7 +72,7 @@ html {
 }
 
 /* --- Marquee --- */
-.marquee-wrapper {
+html.crt .marquee-wrapper {
   position: fixed;
   bottom: 10%;
   left: 0;
@@ -72,14 +82,14 @@ html {
   z-index: 10;
 }
 
-.marquee-inner {
+html.crt .marquee-inner {
   display: inline-flex;
   white-space: nowrap;
   will-change: transform;
   animation: scroll-across 15s linear infinite;
 }
 
-.marquee-text {
+html.crt .marquee-text {
   font-size: clamp(2rem, 4vw, 4rem);
   font-weight: 900;
   text-transform: uppercase;
@@ -88,41 +98,79 @@ html {
     0 0 12px rgba(255, 255, 255, 0.15);
   padding-right: 4rem;
   animation: rainbow-flash 0.7s steps(7, jump-start) infinite;
-  z-index: 20;
 }
 
-/* continuous leftward scroll of the whole strip */
+/* --- Marquee animations --- */
 @keyframes scroll-across {
-  0%   { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
 }
 
-/* rainbow flash effect */
 @keyframes rainbow-flash {
-  0%   { color: #ff0000; }
-  16%  { color: #ff7f00; }
-  33%  { color: #ffff00; }
-  50%  { color: #00ff00; }
-  66%  { color: #0000ff; }
-  83%  { color: #4b0082; }
-  100% { color: #8b00ff; }
+  0% {
+    color: #ff0000;
+  }
+  16% {
+    color: #ff7f00;
+  }
+  33% {
+    color: #ffff00;
+  }
+  50% {
+    color: #00ff00;
+  }
+  66% {
+    color: #0000ff;
+  }
+  83% {
+    color: #4b0082;
+  }
+  100% {
+    color: #8b00ff;
+  }
 }
 
-/* flicker brightness subtly */
 @keyframes flicker {
-  0%, 100% { opacity: 0.25; }
-  10% { opacity: 0.3; }
-  20% { opacity: 0.2; }
-  30% { opacity: 0.28; }
-  50% { opacity: 0.23; }
-  70% { opacity: 0.27; }
-  90% { opacity: 0.24; }
+  0%,
+  100% {
+    opacity: 0.25;
+  }
+  10% {
+    opacity: 0.3;
+  }
+  20% {
+    opacity: 0.2;
+  }
+  30% {
+    opacity: 0.28;
+  }
+  50% {
+    opacity: 0.23;
+  }
+  70% {
+    opacity: 0.27;
+  }
+  90% {
+    opacity: 0.24;
+  }
 }
 
 @keyframes subtle-flicker {
-  0%, 100% { filter: brightness(1.15) contrast(1.1); }
-  25% { filter: brightness(1.1) contrast(1.05); }
-  50% { filter: brightness(1.18) contrast(1.1); }
-  75% { filter: brightness(1.12) contrast(1.05); }
+  0%,
+  100% {
+    filter: brightness(1.15) contrast(1.1);
+  }
+  25% {
+    filter: brightness(1.1) contrast(1.05);
+  }
+  50% {
+    filter: brightness(1.18) contrast(1.1);
+  }
+  75% {
+    filter: brightness(1.12) contrast(1.05);
+  }
 }
-
