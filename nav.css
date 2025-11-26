@@ -1,75 +1,63 @@
-/* Floating corner navigation */
+/* nav.css */
 
+/* Floating XP-ish palette bar */
 .nav-floating {
   position: fixed;
-  bottom: 1.5rem;
-  right: 1.5rem;
-  display: flex;
-  gap: 0.5rem;
-  z-index: 100; /* above background / CRT / etc. */
-  font-family: system-ui, sans-serif;
+  top: 0.75rem;
+  right: 0.75rem;
+  z-index: 999;
+
+  display: inline-flex;
+  gap: 0.25rem;
+  padding: 0.3rem 0.4rem;
+
+  background: #d4d0c8; /* XP grey */
+  border-radius: 6px;
+  border: 1px solid #003399;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
 }
 
-/* Base button style */
+/* XP-ish buttons */
 .nav-btn {
-  width: 3rem;
-  height: 3rem;
-  border-radius: 999px;
-  background: rgba(15, 23, 42, 0.9);
-  border: 1px solid rgba(148, 163, 184, 0.7);
-  display: flex;
+  position: relative;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
+
+  min-width: 80px;
+  padding: 0.2rem 0.6rem;
+
+  font-family: Tahoma, "Segoe UI", system-ui, sans-serif;
+  font-size: 0.8rem;
+  color: #111827;
   text-decoration: none;
-  color: #e5e7eb;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
-  backdrop-filter: blur(8px);
-  font-size: 1.3rem;
-  position: relative;
-  transition:
-    transform 0.12s ease-out,
-    box-shadow 0.12s ease-out,
-    background 0.12s ease-out,
-    border-color 0.12s ease-out;
+
+  background: linear-gradient(to bottom, #fdfdfd, #dcdcdc);
+  border-radius: 3px;
+  border: 1px solid #808080;
+  box-shadow:
+    inset 1px 1px 0 #ffffff,
+    0 1px 1px rgba(0, 0, 0, 0.25);
+
+  cursor: pointer;
 }
 
 .nav-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.45);
-  background: rgba(30, 64, 175, 0.9);
-  border-color: #60a5fa;
+  background: linear-gradient(to bottom, #ffffff, #e4e4e4);
+  border-color: #316ac5;
 }
 
-/* Current page highlight */
+/* Active page (like focused window) */
 .nav-btn.nav-current {
-  background: rgba(22, 163, 74, 0.95);
-  border-color: #bbf7d0;
-  box-shadow: 0 12px 30px rgba(22, 163, 74, 0.45);
+  background: linear-gradient(to bottom, #0a66d1, #004ea4);
+  color: #ffffff;
+  border-color: #002d75;
+  box-shadow:
+    inset 1px 1px 0 rgba(255, 255, 255, 0.3),
+    0 0 0 1px rgba(0, 0, 0, 0.3);
 }
 
-/* Tooltip label */
+/* Label text */
 .nav-label {
-  position: absolute;
-  right: 3.3rem;
-  padding: 0.25rem 0.6rem;
-  border-radius: 999px;
-  background: rgba(15, 23, 42, 0.96);
-  font-size: 0.75rem;
-  color: #e5e7eb;
   white-space: nowrap;
-  border: 1px solid rgba(148, 163, 184, 0.7);
-  opacity: 0;
-  transform: translateX(5px);
-  pointer-events: none;
-  transition: opacity 0.12s ease-out, transform 0.12s ease-out;
-}
-
-.nav-btn:hover .nav-label {
-  opacity: 1;
-  transform: translateX(0);
-}
-
-.home-body .nav-floating {
-  bottom: 3.0rem;
-  right: 5.0rem;
 }

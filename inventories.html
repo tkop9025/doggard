@@ -6,37 +6,39 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="inventories.css" />
     <link rel="stylesheet" href="nav.css" />
+    <script src="nav-loader.js" defer></script>
   </head>
-  <body>
-    <!-- Floating nav -->
-    <div class="nav-floating">
-      <a href="index.html" class="nav-btn">
-        <span class="nav-label">Home</span>
-      </a>
-      <a href="calendar.html" class="nav-btn">
-        <span class="nav-label">Puzzles</span>
-      </a>
-      <a href="inventories.html" class="nav-btn nav-current">
-        <span class="nav-label">Inventory</span>
-      </a>
-      <a href="board.html" class="nav-btn">
-        <span class="nav-label">Board</span>
-      </a>
-    </div>
+  <body data-page="inventories">
+    <div id="nav-root"></div>
 
-    <div class="inventory-page">
-      <div class="inventory-frame">
-        <header class="inventory-header">
-          <div class="inventory-title">Player Items</div>
-          <div class="inventory-subtitle" id="inventorySubtitle">
-            Loading items from the spreadsheet…
+    <div class="inv-layout">
+      <!-- Left: Items -->
+      <aside class="inv-side-panel inv-side-panel--items">
+        <div class="inv-side-titlebar">Items</div>
+        <div class="inv-side-body" id="itemsList">Loading items…</div>
+      </aside>
+
+      <!-- Center: Character inventory window -->
+      <main class="inv-page">
+        <div class="inv-frame">
+          <div class="inv-header">
+            <div class="inv-header-title">Character Inventories</div>
+            <div class="inv-header-subtitle" id="inventorySubtitle"></div>
           </div>
-        </header>
 
-        <main class="inventory-grid" id="inventoryGrid">
-          <!-- Filled by inventories.js -->
-        </main>
-      </div>
+          <div class="inv-body">
+            <div class="inventory-grid" id="inventoryGrid">
+              Loading inventories…
+            </div>
+          </div>
+        </div>
+      </main>
+
+      <!-- Right: Spaces -->
+      <aside class="inv-side-panel inv-side-panel--spaces">
+        <div class="inv-side-titlebar">Spaces</div>
+        <div class="inv-side-body" id="spacesList">Loading spaces…</div>
+      </aside>
     </div>
 
     <script src="inventories.js"></script>

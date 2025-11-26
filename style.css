@@ -1,6 +1,11 @@
-/* Apply CRT effect ONLY when the html has class="crt" */
+/* ===========================
+   CRT HOME PAGE ONLY
+   (index.html has <body class="home-body"> and <html class="crt">)
+   =========================== */
+
+/* base layout just for the home page */
 html.crt,
-html.crt body {
+body.home-body {
   margin: 0;
   height: 100%;
   background: black;
@@ -9,8 +14,8 @@ html.crt body {
   font-family: monospace;
 }
 
-/* --- CRT scanlines overlay --- */
-html.crt body::before {
+/* --- CRT curvature and scanline overlay --- */
+body.home-body::before {
   content: "";
   position: fixed;
   inset: 0;
@@ -27,8 +32,7 @@ html.crt body::before {
   animation: flicker 4s infinite;
 }
 
-/* --- CRT vignette + glow ---- */
-html.crt body::after {
+body.home-body::after {
   content: "";
   position: fixed;
   inset: 0;
@@ -50,7 +54,7 @@ html.crt body::after {
   animation: flicker 4s infinite alternate;
 }
 
-/* --- CRT curvature + color distort --- */
+/* Warp the whole screen into a CRT curve */
 html.crt {
   filter: contrast(1.1) brightness(1.15) saturate(1.05);
   transform: perspective(800px) rotateX(2deg) scale(1.03);
@@ -61,8 +65,8 @@ html.crt {
   animation: subtle-flicker 6s infinite ease-in-out;
 }
 
-/* --- Homepage background image --- */
-html.crt .bg {
+/* --- Background image --- */
+.home-body .bg {
   position: fixed;
   inset: 0;
   background: url("images/doggard.png") center / cover no-repeat;
@@ -72,7 +76,7 @@ html.crt .bg {
 }
 
 /* --- Marquee --- */
-html.crt .marquee-wrapper {
+.home-body .marquee-wrapper {
   position: fixed;
   bottom: 10%;
   left: 0;
@@ -82,14 +86,14 @@ html.crt .marquee-wrapper {
   z-index: 10;
 }
 
-html.crt .marquee-inner {
+.home-body .marquee-inner {
   display: inline-flex;
   white-space: nowrap;
   will-change: transform;
   animation: scroll-across 15s linear infinite;
 }
 
-html.crt .marquee-text {
+.home-body .marquee-text {
   font-size: clamp(2rem, 4vw, 4rem);
   font-weight: 900;
   text-transform: uppercase;
@@ -98,9 +102,10 @@ html.crt .marquee-text {
     0 0 12px rgba(255, 255, 255, 0.15);
   padding-right: 4rem;
   animation: rainbow-flash 0.7s steps(7, jump-start) infinite;
+  z-index: 20;
 }
 
-/* --- Marquee animations --- */
+/* continuous leftward scroll of the whole strip */
 @keyframes scroll-across {
   0% {
     transform: translateX(0);
@@ -110,6 +115,7 @@ html.crt .marquee-text {
   }
 }
 
+/* rainbow flash effect */
 @keyframes rainbow-flash {
   0% {
     color: #ff0000;
@@ -134,6 +140,7 @@ html.crt .marquee-text {
   }
 }
 
+/* flicker brightness subtly */
 @keyframes flicker {
   0%,
   100% {

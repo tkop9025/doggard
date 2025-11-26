@@ -1,4 +1,7 @@
-/* Background: reuse Bliss for consistency with calendar */
+/* ------------------------------
+   Background
+   ------------------------------ */
+
 body {
   margin: 0;
   font-family: Tahoma, "Segoe UI", sans-serif;
@@ -6,55 +9,75 @@ body {
   color: #111827;
 }
 
-/* Centered XP-style window */
-.inventory-page {
+/* ------------------------------
+   Overall inventories layout
+   ------------------------------ */
+
+.inv-layout {
   min-height: 100vh;
   display: flex;
+  gap: 1.5rem;
+  align-items: flex-start;
   justify-content: center;
-  padding: 3rem 1rem;
+  padding: 4rem 1.5rem 2rem;
   box-sizing: border-box;
 }
 
-.inventory-frame {
-  width: 100%;
-  max-width: 900px;
-  border-radius: 6px;
-  overflow: hidden;
-  background: rgba(212, 208, 200, 0.85); /* XP grey, slightly translucent */
-  border: 1px solid #003399;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
-  backdrop-filter: blur(4px);
+/* Center window */
+.inv-page {
+  flex: 1 1 60%;
+  max-width: 960px;
 }
 
-/* Header bar */
-.inventory-header {
+/* ------------------------------
+   Center XP-style window
+   ------------------------------ */
+
+.inv-frame {
+  width: 100%;
+  border-radius: 6px;
+  border: 1px solid #003399;
+  background: rgba(212, 208, 200, 0.9); /* XP grey */
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+  overflow: hidden;
+}
+
+/* Blue title bar */
+.inv-header {
   background: linear-gradient(to bottom, #0a66d1, #004ea4);
-  color: white;
-  padding: 0.75rem 1rem;
+  color: #ffffff;
+  padding: 0.6rem 0.9rem;
   border-bottom: 1px solid #003399;
 }
 
-.inventory-title {
+.inv-header-title {
   font-size: 1rem;
-  font-weight: bold;
+  font-weight: 700;
   text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.4);
 }
 
-.inventory-subtitle {
+.inv-header-subtitle {
   font-size: 0.8rem;
   opacity: 0.95;
   margin-top: 0.15rem;
 }
 
-/* Grid of character cards */
-.inventory-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 0.75rem;
-  padding: 0.75rem;
+/* Inner body */
+.inv-body {
+  padding: 0.7rem 0.8rem 0.9rem;
 }
 
-/* XP-style card for each character */
+/* ------------------------------
+   Inventory cards (one per player)
+   ------------------------------ */
+
+.inventory-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 0.6rem;
+}
+
+/* XP-style card */
 .inventory-card {
   background: #f0f0f0;
   border-radius: 3px;
@@ -65,19 +88,19 @@ body {
   overflow: hidden;
 }
 
-/* Card header (character name) */
+/* Card header (player name) */
 .inventory-card-header {
   background: linear-gradient(to bottom, #f7fbff, #d6e3f8);
   border-bottom: 1px solid #9fb5d9;
-  padding: 0.4rem 0.6rem;
+  padding: 0.35rem 0.45rem;
   font-weight: bold;
   font-size: 0.85rem;
   color: #163b63;
 }
 
-/* Items list */
+/* Card body */
 .inventory-card-body {
-  padding: 0.4rem 0.6rem 0.55rem;
+  padding: 0.35rem 0.5rem 0.45rem;
   font-size: 0.8rem;
 }
 
@@ -90,7 +113,7 @@ body {
 .inventory-item {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 0.15rem;
+  margin-bottom: 0.1rem;
 }
 
 .inventory-item-name {
@@ -106,4 +129,97 @@ body {
 .inventory-empty {
   font-style: italic;
   color: #6b7280;
+}
+
+/* ------------------------------
+   Side panels (Items / Spaces)
+   ------------------------------ */
+
+.inv-side-panel {
+  flex: 0 0 270px;
+  background: #d4d0c8;
+  border-radius: 6px;
+  border: 1px solid #003399;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* XP blue title bar */
+.inv-side-titlebar {
+  background: linear-gradient(to bottom, #0a66d1, #004ea4);
+  color: #ffffff;
+  font-size: 0.85rem;
+  font-weight: 700;
+  padding: 0.3rem 0.6rem;
+  text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.4);
+  border-bottom: 1px solid #003399;
+}
+
+/* Panel body */
+.inv-side-body {
+  background: #f0f0f0;
+  padding: 0.5rem 0.6rem;
+  overflow-y: auto;
+  max-height: 72vh;
+  font-size: 0.8rem;
+}
+
+/* XP-ish list styling */
+.inv-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.inv-list-item {
+  padding: 0.25rem 0.2rem 0.35rem;
+  border-bottom: 1px solid #c3c3c3;
+}
+
+.inv-list-item:last-child {
+  border-bottom: none;
+}
+
+.inv-list-name {
+  font-weight: 600;
+  margin-bottom: 0.1rem;
+}
+
+.inv-list-meta {
+  font-size: 0.75rem;
+  color: #555;
+}
+
+/* Type pill for spaces */
+.inv-list-type-pill {
+  display: inline-block;
+  padding: 0.05rem 0.3rem;
+  margin-right: 0.3rem;
+  border-radius: 999px;
+  background: #e4ecf7;
+  border: 1px solid #9fb5d9;
+  font-size: 0.7rem;
+}
+
+/* ------------------------------
+   Small-screen behaviour
+   ------------------------------ */
+
+@media (max-width: 1100px) {
+  .inv-layout {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1rem;
+  }
+
+  .inv-page {
+    order: -1; /* center window first on mobile */
+    max-width: 100%;
+  }
+
+  .inv-side-panel {
+    flex: 1 1 auto;
+  }
 }

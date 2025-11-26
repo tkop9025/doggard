@@ -1,10 +1,44 @@
-// --- CONFIG: inventory sheet as CSV (gid=0) ---
-const INVENTORY_CSV_URL =
-  "https://docs.google.com/spreadsheets/d/1P5ciYvu7D1KiJxGgAVgVHVYfoj_aicjiCVASuEm_SQw/export?format=csv&gid=0";
+const BASE_SHEET_ID = "1P5ciYvu7D1KiJxGgAVgVHVYfoj_aicjiCVASuEm_SQw";
 
-// --- CSV parsing helper ---
-// Assumes: first row = headers: item, Player1, Player2, ...
-//          subsequent rows: itemName, qtyForPlayer1, qtyForPlayer2, ...
+// gid=0  -> inventories
+const INVENTORY_CSV_URL = `https://docs.google.com/spreadsheets/d/${BASE_SHEET_ID}/export?format=csv&gid=0`;
+
+// gid=1896699616 -> items
+const ITEMS_CSV_URL = `https://docs.google.com/spreadsheets/d/${BASE_SHEET_ID}/export?format=csv&gid=1896699616`;
+
+// gid=68572419 -> spaces
+const SPACES_CSV_URL = `https://docs.google.com/spreadsheets/d/${BASE_SHEET_ID}/export?format=csv&gid=68572419`;
+
+// ---------------- CSV helper ----------------
+
+async function fetchCsv(url) {
+  const res = await fetch(url);
+  const text = await res.text();
+
+  const lines = text.trim().split(/\r?\n/);
+  if (lines.length < 2) return [];
+
+  const headers = lines[0].split(",").map((h) => h.trim());
+  const rows = [];
+
+  for (let i = 1; i < lines.length; i++) {
+    const line = lines[i].trim();
+    if (!line) continue;
+
+    const cols = line.split(",");
+    const row = {};
+    headers.forEach((h, idx) => {
+      row[h] = (cols[idx] || "").trim();
+    });
+    rows.push(row);
+  }
+
+  return rows;
+}
+
+// ---------------- Inventory (per-player cards) ----------------
+
+// headers:  Item, Aidan, Chris, ...
 function parseInventoryCsv(text) {
   console.log("Inventory CSV raw preview:", text.slice(0, 200));
 
@@ -29,23 +63,19 @@ function parseInventoryCsv(text) {
 
   const itemsByPlayer = {};
   players.forEach((name) => {
-    if (name) {
-      itemsByPlayer[name] = [];
-    }
+    if (name) itemsByPlayer[name] = [];
   });
 
   for (let i = 1; i < lines.length; i++) {
     const cols = lines[i].split(",");
     if (!cols.length) continue;
 
-    const rawItemName = (cols[0] || "").trim();
-    if (!rawItemName) continue;
-
-    const itemName = rawItemName;
+    const itemName = (cols[0] || "").trim();
+    if (!itemName) continue;
 
     for (let colIdx = 1; colIdx < headers.length; colIdx++) {
       const player = players[colIdx - 1];
-      if (!player) continue; // skip blank header columns
+      if (!player) continue;
 
       const cell = (cols[colIdx] || "").trim();
       if (!cell) continue;
@@ -53,9 +83,7 @@ function parseInventoryCsv(text) {
       const qty = Number(cell);
       if (!Number.isFinite(qty) || qty <= 0) continue;
 
-      if (!itemsByPlayer[player]) {
-        itemsByPlayer[player] = [];
-      }
+      if (!itemsByPlayer[player]) itemsByPlayer[player] = [];
       itemsByPlayer[player].push({ item: itemName, qty });
     }
   }
@@ -64,11 +92,9 @@ function parseInventoryCsv(text) {
   return { players, itemsByPlayer };
 }
 
-// --- Main loader / renderer ---
-
 async function loadInventory() {
   const grid = document.getElementById("inventoryGrid");
-  const subtitle = document.getElementById("inventorySubtitle");
+  const subtitle = document.getElementById("inventorySubtitle"); // optional
 
   if (!grid) {
     console.error("inventoryGrid element not found");
@@ -88,9 +114,7 @@ async function loadInventory() {
     const text = await res.text();
     const { players, itemsByPlayer } = parseInventoryCsv(text);
 
-    if (subtitle) {
-      subtitle.textContent = "";
-    }
+    if (subtitle) subtitle.textContent = "";
 
     if (!players.length) {
       grid.textContent = "No inventory data found.";
@@ -100,7 +124,7 @@ async function loadInventory() {
     grid.innerHTML = "";
 
     players.forEach((player) => {
-      if (!player) return; // skip empty header
+      if (!player) return;
 
       const card = document.createElement("div");
       card.className = "inventory-card";
@@ -157,4 +181,121 @@ async function loadInventory() {
   }
 }
 
-document.addEventListener("DOMContentLoaded", loadInventory);
+async function loadItemsPanel() {
+  const container = document.getElementById("itemsList");
+  if (!container) return;
+
+  try {
+    const rows = await fetchCsv(ITEMS_CSV_URL);
+    if (!rows.length) {
+      container.textContent = "No items recorded.";
+      return;
+    }
+
+    // Figure out which header is "Name" and which is "Effect"
+    const headers = Object.keys(rows[0]);
+    const nameKey = headers.find((h) => /^name$/i.test(h)) || headers[0];
+    const effectKey =
+      headers.find((h) => /^effect$/i.test(h)) || headers[1] || headers[0];
+
+    const ul = document.createElement("ul");
+    ul.className = "inv-list";
+
+    rows.forEach((row) => {
+      const li = document.createElement("li");
+      li.className = "inv-list-item";
+
+      const name = document.createElement("div");
+      name.className = "inv-list-name";
+      name.textContent = row[nameKey] || "(unnamed item)";
+
+      const effectText = (row[effectKey] || "").trim();
+      if (effectText) {
+        const effect = document.createElement("div");
+        effect.className = "inv-list-meta";
+        effect.textContent = effectText;
+        li.appendChild(name);
+        li.appendChild(effect);
+      } else {
+        li.appendChild(name);
+      }
+
+      ul.appendChild(li);
+    });
+
+    container.innerHTML = "";
+    container.appendChild(ul);
+  } catch (err) {
+    console.error("Failed to load items", err);
+    container.textContent = "Failed to load items.";
+  }
+}
+
+async function loadSpacesPanel() {
+  const container = document.getElementById("spacesList");
+  if (!container) return;
+
+  try {
+    const rows = await fetchCsv(SPACES_CSV_URL);
+    if (!rows.length) {
+      container.textContent = "No spaces recorded.";
+      return;
+    }
+
+    // Detect Name / Type / Effect keys regardless of capitalization
+    const headers = Object.keys(rows[0]);
+    const nameKey = headers.find((h) => /^name$/i.test(h)) || headers[0];
+    const typeKey = headers.find((h) => /^type$/i.test(h)) || null;
+    const effectKey = headers.find((h) => /^effect$/i.test(h)) || null;
+
+    const ul = document.createElement("ul");
+    ul.className = "inv-list";
+
+    rows.forEach((row) => {
+      const li = document.createElement("li");
+      li.className = "inv-list-item";
+
+      const name = document.createElement("div");
+      name.className = "inv-list-name";
+      name.textContent = row[nameKey] || "(unnamed space)";
+
+      const meta = document.createElement("div");
+      meta.className = "inv-list-meta";
+
+      const typeText = typeKey ? (row[typeKey] || "").trim() : "";
+      if (typeText) {
+        const pill = document.createElement("span");
+        pill.className = "inv-list-type-pill";
+        pill.textContent = typeText;
+        meta.appendChild(pill);
+      }
+
+      const effectText = effectKey ? (row[effectKey] || "").trim() : "";
+      if (effectText) {
+        const span = document.createElement("span");
+        span.textContent = effectText;
+        meta.appendChild(span);
+      }
+
+      li.appendChild(name);
+      if (meta.textContent || meta.children.length) {
+        li.appendChild(meta);
+      }
+      ul.appendChild(li);
+    });
+
+    container.innerHTML = "";
+    container.appendChild(ul);
+  } catch (err) {
+    console.error("Failed to load spaces", err);
+    container.textContent = "Failed to load spaces.";
+  }
+}
+
+// ---------------- Boot ----------------
+
+document.addEventListener("DOMContentLoaded", () => {
+  loadInventory();
+  loadItemsPanel();
+  loadSpacesPanel();
+});

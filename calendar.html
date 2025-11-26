@@ -6,27 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="calendar.css" />
     <link rel="stylesheet" href="nav.css" />
+    <script src="nav-loader.js" defer></script>
   </head>
   <body>
-    <!-- Floating nav -->
-    <div class="nav-floating">
-      <a href="index.html" class="nav-btn">
-        <span class="nav-label">Home</span>
-      </a>
-      <a href="calendar.html" class="nav-btn nav-current">
-        <span class="nav-label">Puzzles</span>
-      </a>
-      <a href="inventories.html" class="nav-btn">
-        <span class="nav-label">Inventory</span>
-      </a>
-      <a href="board.html" class="nav-btn">
-        <span class="nav-label">Board</span>
-      </a>
-    </div>
     <div class="page">
+      <div id="nav-root"></div>
       <div class="calendar-frame">
-        <div class="calendar-nav"></div>
-
         <div class="calendar-header">
           <button class="calendar-month-btn" id="prevMonth" type="button">
             &larr;
