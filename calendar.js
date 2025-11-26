@@ -146,7 +146,6 @@ function buildCalendar(year, month) {
   WEEKDAY_LABELS.forEach((label, idx) => {
     const div = document.createElement("div");
     div.className = "calendar-weekday";
-    if (idx === 0 || idx === 6) div.classList.add("calendar-weekday--weekend");
     div.textContent = label;
     grid.appendChild(div);
   });
@@ -173,10 +172,6 @@ function buildCalendar(year, month) {
 
     const cell = document.createElement("div");
     cell.className = "calendar-day";
-
-    if (date.getDay() === 0 || date.getDay() === 6) {
-      cell.classList.add("calendar-day--weekend");
-    }
 
     const number = document.createElement("div");
     number.className = "calendar-day-number";

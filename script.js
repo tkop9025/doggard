@@ -1,7 +1,7 @@
 // ✨ Sparkle trail
 const MAX_SPARKLES = 75;
 
-document.addEventListener("mousemove", e => {
+document.addEventListener("mousemove", (e) => {
   const currentSparkles = document.querySelectorAll(".sparkle").length;
   if (currentSparkles >= MAX_SPARKLES) return;
 
@@ -26,7 +26,6 @@ style.textContent = `
 }`;
 document.head.appendChild(style);
 
-// 🧙‍♂️ D&D Day logic
 const marqueeWrapper = document.getElementById("marqueeWrapper");
 const marqueeInner = document.getElementById("marqueeInner");
 
@@ -36,19 +35,19 @@ const isTuesday = today.getDay() === 2; // Sunday=0, Monday=1, Tuesday=2
 if (isTuesday) {
   marqueeInner.innerHTML = `
     <span class="marquee-text">
-      ✨ D&D TODAY ✨ D&D TODAY ✨ D&D TODAY ✨ D&D TODAY ✨
+      ✨ D&D TODAY ✨ D&D TODAY ✨ D&D TODAY ✨ D&D TODAY
     </span>
     <span class="marquee-text" aria-hidden="true">
-      ✨ D&D TODAY ✨ D&D TODAY ✨ D&D TODAY ✨ D&D TODAY ✨
+      ✨ D&D TODAY ✨ D&D TODAY ✨ D&D TODAY ✨ D&D TODAY
     </span>
   `;
 } else {
   marqueeInner.innerHTML = `
     <span class="marquee-text">
-      ❌ NO D&D TODAY ❌ NO D&D TODAY ❌ NO D&D TODAY ❌ NO D&D TODAY ❌
+      ❌ NO D&D TODAY ❌ NO D&D TODAY ❌ NO D&D TODAY ❌ NO D&D TODAY
     </span>
     <span class="marquee-text" aria-hidden="true">
-      ❌ NO D&D TODAY ❌ NO D&D TODAY ❌ NO D&D TODAY ❌ NO D&D TODAY ❌
+      ❌ NO D&D TODAY ❌ NO D&D TODAY ❌ NO D&D TODAY ❌ NO D&D TODAY
     </span>
   `;
 }
