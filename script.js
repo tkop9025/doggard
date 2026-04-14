@@ -30,9 +30,9 @@ const marqueeWrapper = document.getElementById("marqueeWrapper");
 const marqueeInner = document.getElementById("marqueeInner");
 
 const today = new Date();
-const isTuesday = today.getDay() === 2; // Sunday=0, Monday=1, Tuesday=2
+const isMonday = today.getDay() === 1; // Sunday=0, Monday=1, Tuesday=2
 
-if (isTuesday) {
+if (isMonday) {
   marqueeInner.innerHTML = `
     <span class="marquee-text">
       ✨ D&D TODAY ✨ D&D TODAY ✨ D&D TODAY ✨ D&D TODAY
